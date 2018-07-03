@@ -1,0 +1,146 @@
+-- phpMyAdmin SQL Dump
+-- version 3.4.7
+-- http://www.phpmyadmin.net
+--
+-- Host: 10.16.119.59:3306
+-- Generation Time: Aug 31, 2017 at 04:25 AM
+-- Server version: 5.5.24
+-- PHP Version: 5.3.17
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `web1_surveydb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `survey`
+--
+
+CREATE TABLE IF NOT EXISTS `survey` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key, Table ID',
+`usrid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Quiz Author ID coming from user table',
+`title` varchar(255) NOT NULL DEFAULT '' COMMENT 'Quiz Title',
+`descr` text NOT NULL COMMENT 'Quiz Description with full formatting. HTML',
+`category` varchar(255) NOT NULL DEFAULT '' COMMENT 'Quiz category ID, coming from categories table',
+`emailme` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Settings:: Send email to quiz author (1=Yes/0=No)',
+`MultiEmail` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'For multiple Ids email notification  0=>no, 1=>yes',
+`MultiEmail_Ids` text NOT NULL COMMENT 'value for mutiple email ids',
+`email_content` varchar(100) NOT NULL DEFAULT 'fullreport' COMMENT 'Custome email notification',
+`email_to_takers` tinyint(4) NOT NULL COMMENT '1=>send mail, 0=>Not send',
+`mail_to_takers_content` varchar(100) NOT NULL,
+`show_customize_message` int(2) NOT NULL DEFAULT '0' COMMENT 'Settings: End of quiz message check, whether to show or not',
+`name_required` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Settings: Force user to provide Name',
+`email_required` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 for required email',
+`id_required` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 for required student id or employee id',
+`phone_required` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Settings: Quiz taker phone required or not',
+`address_required` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Settings: Quiz taker address required or not',
+`show_socialmedia` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'show : 0 = No and 1 = Yes',
+`is_sort` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Settings: Check whether the question order was set as "SORT" from "Re-order" questions options.',
+`presentation` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 for 1 question par page, 1 for all question in one page',
+`language` char(3) NOT NULL DEFAULT 'en',
+`total_responses` int(11) NOT NULL DEFAULT '0' COMMENT 'Total attempts made on a quiz. It is used for avg calculation of score on score report page.',
+`start_date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Settings: Survey start date',
+`end_date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Settings: Survey end date',
+`link` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'survey title url',
+`created_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'survey create date',
+`modified_date` int(11) NOT NULL DEFAULT '0' COMMENT 'survey modified date',
+`link_status` enum('discard','queued','draft','published','abuse','duplicated','private','private-draft') CHARACTER SET utf8 NOT NULL DEFAULT 'published' COMMENT 'link status public,private,draft,discarded,privateDraft',
+`status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'change status: 0 for disable or 1 for enable',
+`question_order` tinyint(1) NOT NULL COMMENT '0=random, 1=Predetermined',
+`customize_survey_report` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'customize survey report: 0=no and 1=yes',
+`completion_certificate` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'show : 0 = No and 1 = Yes',
+`end_message` text NOT NULL COMMENT 'survey end message',
+`security_settings` varchar(255) NOT NULL DEFAULT '0' COMMENT '0=Public, 1=Private with link , otherwise private link with password',
+`shuffle` varchar(3) NOT NULL DEFAULT '0' COMMENT '0=not shuffle, 1=shuffle question,2=shuffle question and answers',
+`total_take` int(255) NOT NULL DEFAULT '0' COMMENT 'number of taker per survey',
+`survey_powerdby` varchar(255) NOT NULL DEFAULT 'Survey software',
+`userscore_sum` int(11) NOT NULL DEFAULT '0' COMMENT 'Total sum of score of user. It is used for avg calculation of score on report page.',
+`totalscore_sum` int(15) NOT NULL DEFAULT '0' COMMENT 'Total max score for all of the answers. used for avg calculation of score on report page.',
+`survey_result_A` text NOT NULL COMMENT 'Settings Score: Customized Suiz Result for Option A',
+`survey_result_B` text NOT NULL COMMENT 'Settings Score: Customized Suiz Result for Option B',
+`survey_result_C` text NOT NULL COMMENT 'Settings Score: Customized Survey Result for Option C',
+`survey_result_D` text NOT NULL COMMENT 'Settings Score: Customized Survey Result for Option D',
+`survey_result_E` text NOT NULL COMMENT 'Settings Score: Customized Survey Result for Option E',
+`survey_result_F` text NOT NULL COMMENT 'Settings Score: Customized Survey Result for Option F',
+`survey_result_type` char(2) NOT NULL DEFAULT 'CT' COMMENT 'Settings Score: Survey result type. PF=Pass Fail. LG=Letter Grading. PE=Poor to Excellent. CT=Customized Result',
+`Score_select` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Settings:: 1=select score, 0=no score',
+`link_to_redirect` varchar(255) NOT NULL DEFAULT 'NULL' COMMENT 'This field contains the URL entered by the Author where the page will redirect once User submit the Survey',
+`show_score_endsurvey` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'show score endof survey',
+`show_result` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1=enable showing result   0=disable showing result',
+`numberOfResult` tinyint(4) NOT NULL DEFAULT '2' COMMENT 'number of customizable results shown under settings',
+`survey_access` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=public and 1=private',
+`survey_logo` varchar(255) NOT NULL DEFAULT '0' COMMENT 'logo nama on a survey',
+`logo_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=no and 1=yes',
+`survey_pwd` varchar(255) NOT NULL COMMENT 'Paasword for survey takers protection',
+`pwd_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Status for password protected survey 0=deactivate  1=activate',
+`captcha_status` tinyint(4) NOT NULL COMMENT '1=active,    0=inactive',
+`show_statistics` tinyint(4) NOT NULL COMMENT '1=active  0=inactive',
+`block_attempts` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=not block, 1=block by cookie, 2=block by ip',
+`show_numbering` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1 for showing numbers and 0 for not showing numbers',
+`save_resume` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:false, 1:true',
+`show_tracking` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:tracking disable, 1:tracking enable',
+`tracking_id` varchar(100) NOT NULL COMMENT 'google analytics tracking id',
+`show_QandA` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'will show question and answers on report 1: true 0: false',
+`allowed_attempts` int(11) NOT NULL DEFAULT '0' COMMENT 'Number of attempts per user ',
+`allow_nav` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0=>not allowed, 1=>allowed ',
+`copy_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'copy status 0:disable 1:enable',
+`print_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'print status 0:disable 1:enable',
+`link_folderid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Folder id with which survey is associated',
+`notif_sub` varchar(255) NOT NULL DEFAULT 'PP-[Counter]: [Name] just completed [Survey Title]' COMMENT 'Notification email subject',
+`show_print` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'showing print button on report page',
+`senderIdTaker` varchar(100) NOT NULL DEFAULT '' COMMENT 'sender''s id for taker''s notification',
+`imgurl` varchar(255) NOT NULL COMMENT 'image path or youtube link which is added with survey description',
+`thankupage_created` tinyint(1) NOT NULL DEFAULT '0',
+`custom_link` varchar(255) CHARACTER SET utf8 NOT NULL,
+`custom_url_domain` varchar(255) NOT NULL,
+`social_sharing` tinyint(4) NOT NULL DEFAULT '0',
+`facebook_sharing` tinyint(4) NOT NULL DEFAULT '0',
+`twitter_sharing` tinyint(4) NOT NULL DEFAULT '0',
+`facebook_comments` tinyint(4) NOT NULL DEFAULT '0',
+`facebook_message` varchar(255) NOT NULL,
+`facebook_result_message` varchar(255) NOT NULL,
+`facebook_caption` varchar(255) NOT NULL,
+`facebook_custom_link` varchar(255) NOT NULL,
+`facebook_comment_delimiter` varchar(150) NOT NULL,
+`twitter_custom_message` varchar(255) NOT NULL,
+`twitter_result_message` varchar(255) NOT NULL,
+`twitter_status` tinyint(4) NOT NULL DEFAULT '0',
+`facebook_status` tinyint(4) NOT NULL DEFAULT '0',
+`facebook_img_url` varchar(150) NOT NULL,
+`shuffle_answer` tinyint(1) DEFAULT '0' COMMENT 'Manage answer order, 1= shuffle answer',
+`survey_user_id` int(11) DEFAULT '0' COMMENT 'This contain id of user table with reference to userlogin ',
+`display_title` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=show title, 1=hide title',
+`is_nps` tinyint(4) DEFAULT '0' COMMENT 'If NPS, set as 1',
+`nps_setting` int(11) NOT NULL DEFAULT '0' COMMENT 'nps setting for scheduiling',
+`nps_scheduling` varchar(255) NOT NULL DEFAULT '0' COMMENT '0 for 0ff 1 for 1',
+`inapp` int(11) NOT NULL DEFAULT '0' COMMENT 'inapp_flag',
+`inapp_time` int(11) NOT NULL COMMENT 'inapp setting time',
+`display_survey_popup` int(11) NOT NULL DEFAULT '0' COMMENT 'display survey on preview',
+`signature` varchar(255) DEFAULT NULL COMMENT 'Use filed for add signature in email notification ',
+`helpdesk_nps_status` int(5) NOT NULL DEFAULT '0',
+`helpdesk_nps_email` varchar(255) NOT NULL,
+PRIMARY KEY (`id`),
+KEY `inx_link` (`link`),
+FULLTEXT KEY `search` (`title`,`descr`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 PACK_KEYS=0 COMMENT='Stores the survey created by user' AUTO_INCREMENT=74607 ;
+
+--
+-- Dumping data for table `survey`
+--
+
+INSERT INTO `survey` (`id`, `usrid`, `title`, `descr`, `category`, `emailme`, `MultiEmail`, `MultiEmail_Ids`, `email_content`, `email_to_takers`, `mail_to_takers_content`, `show_customize_message`, `name_required`, `email_required`, `id_required`, `phone_required`, `address_required`, `show_socialmedia`, `is_sort`, `presentation`, `language`, `total_responses`, `start_date_time`, `end_date_time`, `link`, `created_date`, `modified_date`, `link_status`, `status`, `question_order`, `customize_survey_report`, `completion_certificate`, `end_message`, `security_settings`, `shuffle`, `total_take`, `survey_powerdby`, `userscore_sum`, `totalscore_sum`, `survey_result_A`, `survey_result_B`, `survey_result_C`, `survey_result_D`, `survey_result_E`, `survey_result_F`, `survey_result_type`, `Score_select`, `link_to_redirect`, `show_score_endsurvey`, `show_result`, `numberOfResult`, `survey_access`, `survey_logo`, `logo_status`, `survey_pwd`, `pwd_status`, `captcha_status`, `show_statistics`, `block_attempts`, `show_numbering`, `save_resume`, `show_tracking`, `tracking_id`, `show_QandA`, `allowed_attempts`, `allow_nav`, `copy_status`, `print_status`, `link_folderid`, `notif_sub`, `show_print`, `senderIdTaker`, `imgurl`, `thankupage_created`, `custom_link`, `custom_url_domain`, `social_sharing`, `facebook_sharing`, `twitter_sharing`, `facebook_comments`, `facebook_message`, `facebook_result_message`, `facebook_caption`, `facebook_custom_link`, `facebook_comment_delimiter`, `twitter_custom_message`, `twitter_result_message`, `twitter_status`, `facebook_status`, `facebook_img_url`, `shuffle_answer`, `survey_user_id`, `display_title`, `is_nps`, `nps_setting`, `nps_scheduling`, `inapp`, `inapp_time`, `display_survey_popup`, `signature`, `helpdesk_nps_status`, `helpdesk_nps_email`) VALUES
+(14079, 1639641, 'SWA Client Satisfaction Survey', '<span new="" style="color: black; font-family:;" times="">Stevenson, Waplak &amp; Associates is interested in obtaining your comments about the effectiveness of our clinical programs&nbsp;offered to you. Your feedback helps us to improve the quality and services offered.</span>', '8', 1, 0, '', 'fullreport', 0, 'fullreport', 1, 1, 0, 0, 0, 0, 0, 0, 0, 'en', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'pqeyd', '2014-02-21 20:45:57', 1504170131, 'published', 1, 0, 1, 0, '<p>Thank you for taking the survey.&nbsp;We highly value your feedback</p>', '', '0', 51, 'Create survey', 0, 0, '', '', '', '', '', '', 'CT', 0, 'NULL', 0, 0, 2, 0, 'Copy of SWA logo_13185_75407.jpg', 1, '', 0, 0, 0, 0, 1, 0, 0, '', 1, 0, 1, 0, 0, 0, 'PP-[Counter]: [Name] just completed [Survey Title]', 0, 'abbbbbbcccc@proprofs.com', '', 0, '', '', 0, 0, 0, 0, 'SWA Client Satisfaction Survey\r\nhttps://www.proprofs.com/survey/t/?title=pqeyd @ProProfs															  ', '', 'www.proprofs.com', '', '', 'SWA Client Satisfaction Survey\r\nhttps://www.proprofs.com/survey/t/?title=pqeyd @ProProfs', '', 1, 0, '', 0, 1625766, 0, 0, 0, '0', 0, 0, 0, '', 0, '0');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

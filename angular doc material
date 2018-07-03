@@ -1,0 +1,124 @@
+Module:
+
+
+An AngularJS module defines an application.
+
+The module is a container for the different parts of an application.
+
+The module is a container for the application controllers.
+
+Controllers always belong to a module.
+
+......................................................
+
+
+Directive:
+
+AngularJS lets you extend HTML with new attributes called Directives.
+
+AngularJS has a set of built-in directives which offers functionality to your applications.
+
+AngularJS also lets you define your own directives.
+
+..............................................................
+
+Model:
+
+he ng-model directive binds the value of HTML controls (input, select, textarea) to application data.
+
+.............................................
+
+
+Two-Way Binding:
+
+both ways. If the user changes the value inside the input field, the AngularJS property will also change its value:
+
+.........................................................
+
+data binding:
+
+Data binding in AngularJS is the synchronization between the model and the view.
+
+.........................................
+
+Data Model:
+AngularJS applications usually have a data model. The data model is a collection of data available for the application.
+
+.............................................
+
+controller:
+
+AngularJS applications are controlled by controllers.
+
+The ng-controller directive defines the application controller.
+
+A controller is a JavaScript Object, created by a standard JavaScript object constructor.
+
+..............................................
+
+Scope:
+
+The scope is the binding part between the HTML (view) and the JavaScript (controller).
+
+The scope is an object with the available properties and methods.
+
+The scope is available for both the view and the controller.
+
+When adding properties to the $scope object in the controller, the view (HTML) gets access to these properties.
+
+In the view, you do not use the prefix $scope, you just refer to a propertyname, like {{carname}}.
+
+
+If we consider an AngularJS application to consist of:
+
+View, which is the HTML.
+Model, which is the data available for the current view.
+Controller, which is the JavaScript function that makes/changes/removes/controls the data.
+Then the scope is the Model.
+
+The scope is a JavaScript object with properties and methods, which are available for both the view and the controller.
+
+..............................................................
+
+Filter:
+
+Filters can be added in AngularJS to format data.
+
+AngularJS provides filters to transform data:
+
+currency Format a number to a currency format.
+
+date Format a date to a specified format.
+
+filter Select a subset of items from an array.
+
+json Format an object to a JSON string.
+
+limitTo Limits an array/string, into a specified number of elements/characters.
+
+lowercase Format a string to lower case.
+
+number Format a number to a string.
+
+orderBy Orders an array by an expression.
+
+uppercase Format a string to upper case.
+
+
+Filters can be added to expressions by using the pipe character |, followed by a filter.
+
+..............................................................................
+
+Service:
+
+In AngularJS, a service is a function, or object, that is available for, and limited to, your AngularJS application.
+
+AngularJS has about 30 built-in services. One of them is the $location service.
+
+The $location service has methods which return information about the location of the current web page:
+
+
+...............................................................................
+
+
+
